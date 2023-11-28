@@ -1,0 +1,45 @@
+{% extends 'webapps2023/base.html' %}
+{% block content %}
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        <div>
+            <p>Welcome {{ customer.customer_data.Name }}!</p>
+        </div>
+        <h1>Payment Request Confirmation</h1>
+        <p>Receiver: {{ payment_request.receiver }}</p>
+        <p>Amount: {{ payment_request.Amount }}</p>
+        <p>Description: {{ payment_request.reason }}</p>
+        {% if payment_request.status == 'pending' %}
+            <form method="post" action="{% url 'users:accept-payment' request_id=payment_request.id %}">
+                {% csrf_token %}
+                <button type="submit">Accept Payment</button>
+            </form>
+            <form method="post" action="{% url 'users:decline-payment' request_id=payment_request.id %}">
+                {% csrf_token %}
+                <button type="submit">Decline Payment</button>
+            </form>
+        {% else %}
+            <p>Status: {{ payment_request.status }}</p>
+        {% endif %}
+    {% else %}
+        <p>You can't access this page. Please log in.</p>
+    {% endif %}
+    <script>
+    </script>
+
+{% endblock%}
+
+
+{#{% if payment_request.status == 'pending' %}#}
+{#    <form method="post" action="{% url 'users:accept-payment' request_id=payment_request.id %}">#}
+{#        {% csrf_token %}#}
+{#        <button type="submit">Accept Payment</button>#}
+{#    </form>#}
+{#    <form method="post" action="{% url 'users:decline-payment' request_id=payment_request.id %}">#}
+{#        {% csrf_token %}#}
+{#        <button type="submit">Decline Payment</button>#}
+{#    </form>#}
+{#{% else %}#}
+{#    <p>Status: {{ payment_request.status }}</p>#}
+{#{% endif %}#}
+

@@ -1,0 +1,26 @@
+<body>
+{% extends 'webapps2023/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+                <div id="details_box">
+                    <form  method="POST"  class="form1">
+                        {% if user.is_authenticated %}
+                                {% csrf_token %}
+                                <div style="background-color: #1b1b1b; color: #ffefef; width: 400px; align-content: center; padding: 10px; margin: auto; border-radius: 10px; margin-bottom: 4px;">
+                                    <h4 style="text-align: center"> TRANSFER </h4>
+                                    <div>
+                                        {{form|crispy}}
+                                        <button style="background-color: #5cb85c; border-radius: 10px; color: #ffefef;" id="submit" type="submit" class="sub">Transfer</button>
+                                    </div>
+                                    <div><span>{{msg|safe}}</span></div>
+                                </div>
+                                <p style="text-align: center"> <small>By transferring money from your account, you agree to the <a href="#">Terms and Conditions</a> of amount transfer</small>.</p>
+                            {% else %}
+                                <p>You can't access this page. Please log in.</p>
+                            {% endif %}
+                    </form>
+                </div>
+
+{% endblock%}
+</body>

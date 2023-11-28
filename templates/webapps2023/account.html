@@ -1,0 +1,79 @@
+{% extends 'webapps2023/base.html' %}
+{% block content %}
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        <form name="acc_management" id="acc_management" action="process_account_action/">
+        <input type="hidden" name="account_action" id="account_action">
+        <div style="background-color: #1b1b1b; color: #ffefef; width: 400px; align-content: center; padding: 10px; margin: auto; border-radius: 10px; margin-bottom: 4px;">
+            <h4 style="text-align: center"> ACCOUNT DETAILS: </h4>
+            <p>Account Name: {{ customer.customer_data.Name }}</p>
+            <p>Branch-ID: <span>Sussex University</span> </p>
+            {% if accounts %}
+                {% for accno, acc_obj in accounts.items %}
+                    <p>Account number : {{ accno }}</p>
+                    <p> Account Balance: <span> {{ acc_obj.account_details.Balance }}</span> </p>
+                {% endfor %}
+            {% else %}
+                <p> New User. No accounts yet. </p>
+            {% endif %}
+            <button style="background-color: #5cb85c; color: #ffefef; margin-bottom: 5px;" onclick="set_account_action('create')" id="createbutton"> Create New Account </button>
+            <p>Close Account?</p>
+            <label><input name="close_accno" id="close_accno"> </label>
+            <button style="background-color: #ff253a; color: #ffefef;" onclick="set_account_action('close');check_valid_accno()" type="button"> Close Account </button>
+            <div><span>{{msg|safe}}</span></div>
+        </div>
+        <!-- Setting button type = "button" so that form does not submit on button click -->
+    {% else %}
+        <p>You cant access this page. Please log in.</p>
+    {% endif %}
+
+
+</form>
+    <script>
+        function set_account_action(account_action_val){
+            hidden_field = document.getElementById("account_action");
+            hidden_field.setAttribute("value", account_action_val);
+        }
+
+
+        {% if request.session.create %}
+            var createbutton = document.getElementById("createbutton");
+            createbutton.addEventListener("click", function() {
+                createbutton.setAttribute("disabled", true);
+            });
+        {% endif %}
+
+        function check_valid_accno(){
+            accno = document.getElementById("close_accno").value;
+            accno_int = parseInt(accno)
+            valid_accounts = {{can_close_accnos}};
+            invalid_accno = true;
+
+            for(accno of valid_accounts){
+                if(accno_int === accno){
+                    form_elem = document.getElementById("acc_management");
+                    form_elem.submit();
+                    invalid_accno = false;
+                }
+            }
+
+            if(invalid_accno){
+                err_msg_tag = document.getElementById("err_msg");
+                err_msg_tag.textContent = "Invalid Account Number! User does not own this account";
+            }
+            /*
+            if(accno_int in valid_accounts){
+            //Checking if accno exists in valid_accounts Javascript obj
+                form_elem = document.getElementById("acc_management");
+                form_elem.submit();
+            }
+            else{
+                err_msg_tag = document.getElementById("err_msg");
+                err_msg_tag.textContent = "Invalid Account Number! User does not own this account";
+            }
+            */
+        }
+
+
+    </script>
+{% endblock%}

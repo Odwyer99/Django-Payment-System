@@ -1,0 +1,46 @@
+
+% extends 'webapps2023/base.html' %}
+{% block title %}
+    Create an Account
+{% endblock %}
+
+{% block content %}
+    <h1>Payment Requests</h1>
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        {% for notification in notifications %}
+            <div class="notification {% if not notification.is_read %}unread{% endif %}">
+                <p>{{ notification.message }}</p>
+                {% if notification.status == 'pending' %}
+                    <form method="post" action="{% url 'users:accept-payment' request_id=payment_request.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Accept Payment</button>
+                    </form>
+                    <form method="post" action="{% url 'users:decline-payment' request_id=payment_request.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Decline Payment</button>
+                    </form>
+                {% else %}
+                    <p>Status: {{ payment_request.status }}</p>
+                {% endif %}
+                <p class="timestamp">{{ notification.timestamp }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You can't access this page. Please log in.</p>
+    {% endif %}
+{% endblock %}
+
+
+{% if payment_request.status == 'pending' %}
+    <form method="post" action="{% url 'users:accept-payment' request_id=payment_request.id %}">
+        {% csrf_token %}
+        <button type="submit">Accept Payment</button>
+    </form>
+    <form method="post" action="{% url 'users:decline-payment' request_id=payment_request.id %}">
+        {% csrf_token %}
+        <button type="submit">Decline Payment</button>
+    </form>
+{% else %}
+    <p>Status: {{ payment_request.status }}</p>
+{% endif %}

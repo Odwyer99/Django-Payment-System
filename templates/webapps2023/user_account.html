@@ -1,0 +1,56 @@
+{% extends 'webapps2023/base.html' %}
+{% block content %}
+
+
+                {% if user.is_authenticated %}
+                <div style="margin-bottom: 6px;" id="details_box" >
+                    <h4 style="font-size: 28px; text-transform: uppercase;">Welcome to your Dashboard </h4>
+                    <p style="font-size: 20px; font-family: 'Fira Code'; text-transform: capitalize; font-weight: bolder ">{{ customer.customer_data.Name }} </p>
+                    <a style="text-decoration: none; background-color: #5cb85c; width: 50px; padding: 10px; color: #ffefef; border-radius: 10px;" href="account"> GET STARTED </a>
+                </div>
+                <form method="get" action="redirect/">
+                    <input type="hidden" name="function_chosen" id="function_chosen">
+                    <div id="buttons_box" style="display: grid; grid-template-columns:1fr 2fr; margin-left:100px; gap: 20px;">
+                        <div style="width: 500px; text-align: center; margin: 4px; background-color: #5b80b2; padding: 5px; border-radius: 10px; ">
+                            <h5 style="font-family: 'Fira Code'"> ACCOUNT</h5>
+                            <p> Details of your account: Check your account balance, Your Account Number, Create New Account and Close Account. </p>
+                            <button style="background-color: #1b1b1b; color: #ffefef;" id="buttons" class="button" onclick="set_function_chosen('account')">View Accounts</button>
+                        </div>
+                        <div style="width: 500px; text-align: center; margin: 4px; background-color: #81d4fa; padding: 5px; border-radius: 10px;">
+                            <h5 style="font-family: 'Fira Code'"> WITHDRAW</h5>
+                            <p> User can Withdraw Money from their Account with their Valid account number!</p>
+                            <button style="background-color: #1b1b1b; color: #ffefef;"  id="buttons" onclick="set_function_chosen('withdraw')">   Withdraw   </button>
+                        </div>
+                        <div style="width: 500px; text-align: center; margin: 4px; background-color: #f5dd5d; padding: 5px; border-radius: 10px;">
+                            <h5 style="font-family: 'Fira Code'"> DEPOSIT</h5>
+                            <p> User can Deposit Money into their Account with their Valid account number!</p>
+                            <button style="background-color: #1b1b1b; color: #ffefef;"  id="buttons" onclick="set_function_chosen('deposit')">   Deposit    </button>
+                        </div>
+                        <div style="width: 500px; text-align: center; margin: 4px; background-color: #6f94c6; padding: 5px; border-radius: 10px;">
+                            <h5 style="font-family: 'Fira Code'"> TRANSFER</h5>
+                            <p> User can Transfer Money from their Account with their Valid account number and receiver valid account number!</p>
+                            <button style="background-color: #1b1b1b; color: #ffefef;"  id="buttons" onclick="set_function_chosen('transfer')">  Transfer   </button>
+                        </div>
+                        <div style="width: 500px; text-align: center; margin: 4px;  background-color:#5b80b2; padding: 5px; border-radius: 10px;">
+                            <h5 style="font-family: 'Fira Code'"> TRANSACTIONS</h5>
+                            <p> User can view all transactions on their account, withdraw, deposit, transfer: Note all transactions have a valid trans_id!</p>
+                            <button style="background-color: #1b1b1b; color: #ffefef;"  id="buttons" onclick="set_function_chosen('stat_gen')">  Transaction_History   </button>
+                        </div>
+                        <div style="width: 500px; text-align: center; margin: 4px;  background-color:#81d4fa; padding: 5px; border-radius: 10px;">
+                            <h5 style="font-family: 'Fira Code'"> PAYMENT_REQUEST</h5>
+                            <p> User can request payment from other registered users, using their username to request payment for another users.</p>
+                            <button style="background-color: #1b1b1b; color: #ffefef;"  id="buttons" onclick="set_function_chosen('request')">  Payment_Request   </button>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>You can't access this page. Please log in.</p>
+                {% endif %}
+
+
+    <script>
+        function set_function_chosen(menu_name){
+            hidden_field = document.getElementById("function_chosen");
+            hidden_field.setAttribute("value", menu_name);
+        }
+    </script>
+{% endblock%}

@@ -1,0 +1,26 @@
+{% extends 'webapps2023/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Create an Account
+{% endblock %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        {{form1|crispy}}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Payment Requests</h1>
+    <ul>
+        {% for payment_request in payment_requests %}
+            <li>{{ payment_request.sender }} requested {{ payment_request.amount }}</li>
+        {% empty %}
+            <li>No payment requests.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

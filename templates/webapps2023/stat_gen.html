@@ -1,0 +1,85 @@
+
+{% extends 'webapps2023/base.html' %}
+{% block content %}
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        <form name="stat_gen" action="get_stat_gen/">
+        <input type="hidden" name="account_action" id="account_action">
+        <div>
+
+
+                        <h4 style="margin-bottom: 15px">Transaction History :</h4>
+                        <table style="min-width: 100%; table-layout: auto">
+                            <thead>
+                            <tr style="background-color: #1b1b1b; color: #ffefef;">
+                                <th style="padding: 2px 16px;">
+                                    <span >TRANS_ID</span>
+                                </th>
+
+                                <th style="padding: 2px 16px;">
+                                    <span> ACC_NO</span>
+                                </th>
+
+                                <th style="padding: 2px 16px;">
+                                    <span>AMOUNT</span>
+                                </th>
+
+                                <th style="padding: 2px 16px;">
+                                    <span>TYPE</span>
+                                </th>
+
+                                <th style="padding: 2px 16px;">
+                                    <span>DATE</span>
+                                </th>
+
+                                <th style="padding: 2px 16px;">
+                                    <span>TIME</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            {% if accounts %}
+                                {% for accno, trans_obj_list in transaction.items %}
+                                    {% if transaction and msg != 'filter'%}
+                                        {% for trans_obj in trans_obj_list %}
+                                            <tr style="text-align: justify; background-color: antiquewhite;">
+                                                <td style="padding: 2px 16px;" >{{trans_obj.trans_id}}</td>
+                                                <td style="padding: 2px 16px;">{{ accno }}</td>
+                                                <td style="padding: 2px 16px;">{{trans_obj.trans_details.Amount}}</td>
+                                                <td style="padding: 2px 10px;">{{trans_obj.trans_details.Type}}</td>
+                                                <td style="padding: 2px 10px;">{{trans_obj.trans_details.Date}}</td>
+                                                <td style="padding: 2px 10px;">{{trans_obj.trans_details.Time}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for trans_obj in trans_obj_list%}
+                                            <tr>
+                                                <td>{{trans_obj.Trans_ID}}</td>
+                                                <td>{{ accno }}</td>
+                                                <td>{{trans_obj.Amount}}</td>
+                                                <td>{{trans_obj.Type}}</td>
+                                                <td>{{trans_ob.Date}}</td>
+                                                <td>{{trans_ob.Time}}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                            {% endif %}
+                        </table>
+        </div>
+    {% else %}
+        <p>You can't access this page. Please log in.</p>
+    {% endif %}
+
+
+</form>
+    <script>
+        function set_account_action(account_action_val){
+            hidden_field = document.getElementById("account_action");
+            hidden_field.setAttribute("value", account_action_val);
+        }
+    </script>
+
+{% endblock%}
+

@@ -1,0 +1,63 @@
+{% extends 'webapps2023/base.html' %}
+{% block title %}
+    WebApps2023 Homepage
+{% endblock %}
+{% block stylecontent %}
+    <style>
+    body {
+        background-color: #eeeeee;
+    }
+    #hero_content{
+        text-align: center;
+        justify-content: center;
+        align-content: center;
+    }
+    .hero_heading{
+        font-family: "Fira Code";
+        font-size: xxx-large;
+    }
+    .hero_content1{
+        width: 400px;
+        background-color: #5b80b2;
+        padding: 10px;
+        border-radius: 5%;
+        margin-top: 10px;
+    }
+    .hero_content2{
+        width: 400px;
+        background-color: #f5dd5d;
+        padding: 10px;
+        border-radius: 5%;
+        margin-left: 400px;
+        margin-top: 10px;
+    }
+    .hero_content3{
+        width: 400px;
+        background-color: #006b1b;
+        padding: 10px;
+        border-radius: 5%;
+        margin-left: 800px;
+        margin-top: 10px;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="hero_content">
+        <h2 class="hero_heading">Welcome To <br> <span> WebApps Online Payment</span> <p>Service 2023</p> </h2>
+    <div>
+        <div class="hero_content1">
+             <h4> TRANSACTION </h4>
+                <p> User can perform transactions from their account to receiver account using their account number.</p>
+        </div>
+        <div class="hero_content2">
+            <h4> REQUEST_PAYMENT </h4>
+            <p> This system can send payment request using from their account to desire user account </p>
+        </div>
+        <div class="hero_content3">
+            <h4> CURRENCY_EXCHANGE   </h4>
+            <p> This system can carry out currency exchange using web_service from one user account to another using account. </p>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

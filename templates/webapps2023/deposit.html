@@ -1,0 +1,24 @@
+
+{% extends 'webapps2023/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+                <div id="details_box">
+                    <form name="deposit_details" action="deposit/" method="POST">
+                        {% if user.is_authenticated %}
+                                {% csrf_token %}
+                                <div style="background-color: #1b1b1b; color: #ffefef; width: 400px; align-content: center; padding: 10px; margin: auto; border-radius: 10px;">
+                                    <h4 style="text-align: center"> DEPOSIT </h4>
+{#                                    <p>Amount to be deposited : :</p>#}
+{#                                    <label style="margin-bottom: 4px;"><input type="number" name="amount" placeholder="Amount"></label>#}
+{#                                    <p> Deposit into account :</p>#}
+{#                                    <label style="margin-bottom: 4px;"><input type="text" name="acc_no" placeholder="Account number"></label>#}
+                                    {{form|crispy}}
+                                    <button style="align-content: center; background-color: #5cb85c; border-radius: 10px; color: #ffefef;">Deposit</button>
+                                    <div><span>{{msg|safe}}</span></div>
+                                </div>
+                            {% else %}
+                                <p>You cant access this page. Please log in.</p>
+                            {% endif %}
+                    </form>
+                </div>
+{%endblock%}

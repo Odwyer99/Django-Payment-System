@@ -1,0 +1,28 @@
+<body>
+{% extends 'webapps2023/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+    <div id="details_box">
+        <form  method="POST"  class="form1">
+            {% if user.is_authenticated %}
+                {% csrf_token %}
+                <div style="background-color: #1b1b1b; color: #ffefef; width: 400px; align-content: center; padding: 20px; margin: auto; border-radius: 10px; margin-bottom: 4px;">
+                    <h4 style="text-align: center"> REQUEST </h4>
+                    <div id="total">
+                        {{form|crispy}}
+                        <button id="submit" type="submit" >Request</button>
+                    </div>
+                    <div><span>{{msg|safe}}</span></div>
+                </div>
+            {% else %}
+                <p>You can't access this page. Please log in.</p>
+            {% endif %}
+        </form>
+    </div>
+{% endblock%}
+</body>
+
+
